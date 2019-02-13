@@ -59,5 +59,21 @@ namespace FlatBuffers.Benchmarks
                 Monster.FinishMonsterBuffer(fbb2, monster);
             }
         }
+
+        [Benchmark]
+        public void TestTables()
+        {
+            FlatBufferBuilder builder = new FlatBufferBuilder(1024 * 1024 * 32);
+            for (int x = 0; x < 500000; ++x)
+            {
+                var offset = builder.CreateString("T");
+                builder.StartObject(4);
+                builder.AddDouble(3.2);
+                builder.AddDouble(4.2);
+                builder.AddDouble(5.2);
+                builder.AddOffset(offset.Value);
+                builder.EndObject();
+            }
+        }
     }
 }
